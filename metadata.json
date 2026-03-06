@@ -1,0 +1,5 @@
+{
+  "name": "Consultoria Fitness Pro",
+  "description": "Plataforma web para gestão de consultoria fitness: cadastro de alunos, treinos com vídeos do YouTube e dietas.",
+  "requestFramePermissions": []
+}
