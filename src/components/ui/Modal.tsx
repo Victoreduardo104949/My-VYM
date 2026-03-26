@@ -7,9 +7,10 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  size?: 'default' | 'large';
 }
 
-export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, title, children, size = 'default' }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -37,7 +38,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[90vh]"
+              className={`w-full ${size === 'large' ? 'max-w-4xl' : 'max-w-lg'} bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[90vh]`}
             >
               <div className="flex items-center justify-between p-6 border-b border-zinc-800">
                 <h2 className="text-xl font-semibold text-white">{title}</h2>

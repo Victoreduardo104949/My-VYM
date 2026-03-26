@@ -54,23 +54,26 @@ export default function Students() {
 
   async function onSubmit(data: StudentForm) {
     try {
-      await fetch('/api/students', {
+      // Prevent sending empty string as NaN/empty to Postgres INTEGER column
+      const payload = { ...data, age: data.age || null };
+
+      await fetcher('/api/students', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       reset();
       setIsModalOpen(false);
       loadStudents();
     } catch (error) {
       console.error('Failed to create student', error);
+      alert('Failed to create student. Please check if email already exists.');
     }
   }
 
   async function handleDelete(id: number) {
     if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
     try {
-      await fetch(`/api/students/${id}`, { method: 'DELETE' });
+      await fetcher(`/api/students/${id}`, { method: 'DELETE' });
       loadStudents();
     } catch (error) {
       console.error('Failed to delete student', error);
@@ -119,7 +122,7 @@ export default function Students() {
               className="group bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-violet-500/50 transition-all duration-300 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              
+
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-violet-400 group-hover:bg-violet-500/10 transition-colors">
